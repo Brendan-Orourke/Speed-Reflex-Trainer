@@ -2,44 +2,60 @@
  *
  * Created by: Brendan O'Rourke
  * Created on: Jan 2026
- * This program Records Your reaction time
+ * This program Records Your reaction time and records 2 different players best 
 */
-let reactionTime = 0
+let playerMode = 1
+let scoreP1 = 9999
+let scoreP2 = 9999
 let startTime = 0
-let highScore = 9999
+let strip = neopixel.create(DigitalPin.P15, 4, NeoPixelMode.RGB)
 
-let neopixelStrip = neopixel.create(DigitalPin.P0, 4, NeoPixelMode.RGB)
-neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Black))
-basic.showIcon(IconNames.Asleep)
+// Setup
+strip.showColor(neopixel.colors(NeoPixelColors.Black))
+basic.showString("Player 1") // Start as Player 1
 
-// Reaction Button 
-input.onButtonPressed(Button.A, function () { })
-if (startTime == 0) { }
+// Switch Player by Shaking Microbit
+input.onGesture(Gesture.Shake, function () {
+if (playerMode == 1) {
+playerMode = 2
+basic.showString("Player 2")
+} else {
+playerMode = 1
+basic.showString("Player 1")
+}
+})
 
-// If somebody false starts
-neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Indigo)) 
-basic.showIcon(IconNames.No)
-basic.pause(1000)
+// Start game press Button B 
+input.onButtonPressed(Button.B, function () {
 basic.clearScreen()
+strip.showColor(neopixel.colors(NeoPixelColors.Red))
+basic.pause(randint(1000, 3000))
+strip.showColor(neopixel.colors(NeoPixelColors.Green))
+startTime = control.millis()
+})
 
-// Proper Hit
-
+// Results Button A 
+input.onButtonPressed(Button.A, function () {
+if (startTime > 0) {
+let result = control.millis() - startTime
 startTime = 0
-basic.showNumber(reactionTime)
+basic.showNumber(result)
 
-if (reactionTime < highScore) { }
-highScore = reactionTime
-neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Yellow))
-basic.showString("HIGHSCORE!")
-neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Blue))
-basic.pause(2000)
-neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Black))
-
-// Button B A new game
-input.onButtonPressed(Button.B, function  () { } )
-basic.clearScreen()
-neopixelStrip.setPixelColor(0, neopixel.colors(NeoPixelColors.Red))
-
-// waiting for a random moment to activate
-basic.pause(randint(1500,4500))
-
+// Check High Score for the ACTIVE player
+if (playerMode == 1) {
+if (result < scoreP1) {
+scoreP1 = result
+strip.showColor(neopixel.colors(NeoPixelColors.Yellow))
+basic.showString("Player 1 BEST!")
+}
+} else {
+ if (result < scoreP2) {
+ scoreP2 = result
+ strip.showColor(neopixel.colors(NeoPixelColors.Yellow))
+basic.showString("Player 2 BEST!")
+}
+}
+basic.pause(1000)
+strip.showColor(neopixel.colors(NeoPixelColors.Black))
+}
+})
