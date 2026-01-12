@@ -6,6 +6,7 @@
 */
 
 let playerMode = 1
+let currentPlayer = 1
 let scoreP1 = 9999
 let scoreP2 = 9999
 let startTime = 0
@@ -18,10 +19,12 @@ basic.showString("Player 1")
 // Switch Player by Shaking Microbit
     input.onGesture(Gesture.Shake, function () {
 // Swaps between 1 and 2 automatically
-    playerMode = 3 - playerMode
-    basic.showString("Player " + playerMode)
-})
-
+    if (currentPlayer == 1) {   
+        currentPlayer = 2   
+    } else {    
+        currentPlayer = 1
+    }   
+    
 // Start game press Button B 
 input.onButtonPressed(Button.B, function () {
     basic.clearScreen()
@@ -54,5 +57,4 @@ input.onButtonPressed(Button.A, function () {
 
         basic.pause(1000)
         strip.showColor(neopixel.colors(NeoPixelColors.Black))
-    }
-})
+    }})})
