@@ -18,7 +18,6 @@ basic.showString("P1")
 
 // Switch Player by Shaking Microbit between 1 and 2 
 input.onGesture(Gesture.Shake, function () {
-    input.onGesture(Gesture.Shake, function () {
         currentPlayer = (currentPlayer == 1) ? 2 : 1
     })
 
