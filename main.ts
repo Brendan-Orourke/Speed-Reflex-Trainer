@@ -13,16 +13,14 @@ let startTime = 0
 let strip = neopixel.create(DigitalPin.P15, 4, NeoPixelMode.RGB)
 
 // Setup
-strip.showColor(neopixel.colors(NeoPixelColors.Blue))
+strip.showColor(neopixel.colors(NeoPixelColors.Black))
 basic.showString("P1")
 
 // Switch Player by Shaking Microbit between 1 and 2 
 input.onGesture(Gesture.Shake, function () {
-    if (currentPlayer == 1) {
-        currentPlayer = 2
-    } else {
-        currentPlayer = 1
-    }
+    input.onGesture(Gesture.Shake, function () {
+        currentPlayer = (currentPlayer == 1) ? 2 : 1
+    })
 
     // Start game press Button B
     input.onButtonPressed(Button.B, function () {
