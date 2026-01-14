@@ -13,12 +13,11 @@ let startTime = 0
 let strip = neopixel.create(DigitalPin.P15, 4, NeoPixelMode.RGB)
 
 // Setup
-strip.showColor(neopixel.colors(NeoPixelColors.Black))
-basic.showString("Player 1")
+strip.showColor(neopixel.colors(NeoPixelColors.Blue))
+basic.showString("P1")
 
-// Switch Player by Shaking Microbit
+// Switch Player by Shaking Microbit between 1 and 2 
 input.onGesture(Gesture.Shake, function () {
-    // Swaps between 1 and 2 automatically
     if (currentPlayer == 1) {
         currentPlayer = 2
     } else {
@@ -34,14 +33,12 @@ input.onGesture(Gesture.Shake, function () {
         startTime = control.millis()
     })
 
-
     // Results Button A
     input.onButtonPressed(Button.A, function () {
         if (startTime > 0) {
             let result = control.millis() - startTime
             startTime = 0
             basic.showNumber(result)
-
 
             // Check High Score for Player 1
             if (playerMode == 1 && result < scoreP1) {
@@ -50,14 +47,12 @@ input.onGesture(Gesture.Shake, function () {
                 basic.showString("Player 1 BEST!")
             }
 
-
             // Check High Score for Player 2
             if (playerMode == 2 && result < scoreP2) {
                 scoreP2 = result
                 strip.showColor(neopixel.colors(NeoPixelColors.Yellow))
                 basic.showString("Player 2 BEST!")
             }
-
 
             basic.pause(1000)
             strip.showColor(neopixel.colors(NeoPixelColors.Black))
