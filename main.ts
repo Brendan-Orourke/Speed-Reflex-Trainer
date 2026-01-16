@@ -1,4 +1,4 @@
-/* Copyright (c) 2020 MTHS All rights reserved
+/* Copyright (c) 2026 MTHS All rights reserved
  *
  * Created by: Brendan O'Rourke
  * Created on: Jan 2026
@@ -19,7 +19,7 @@ basic.showString("P1")
 
 // Switch Player by shaking
 input.onGesture(Gesture.Shake, function () {
-    currentPlayer = currentPlayer == 1 ? 2 : 1
+    currentPlayer = currentPlayer === 1 ? 2 : 1
     basic.showString("P" + currentPlayer)
 })
 
@@ -45,14 +45,14 @@ input.onButtonPressed(Button.A, function () {
         basic.showNumber(result)
 
         // Player 1 best score
-        if (currentPlayer == 1 && result < scoreP1) {
+        if (currentPlayer === 1 && result < scoreP1) {
             scoreP1 = result
             strip.showColor(neopixel.colors(NeoPixelColors.Yellow))
             basic.showString("P1 BEST")
         }
 
         // Player 2 best score
-        if (currentPlayer == 2 && result < scoreP2) {
+        if (currentPlayer === 2 && result < scoreP2) {
             scoreP2 = result
             strip.showColor(neopixel.colors(NeoPixelColors.Yellow))
             basic.showString("P2 BEST")
