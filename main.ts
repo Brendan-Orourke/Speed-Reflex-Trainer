@@ -9,7 +9,8 @@ let scoreP1 = 9999
 let scoreP2 = 9999
 let startTime = 0
 let gameActive = false
-let waitingForGreen = false 
+let falseStart = false 
+
 let strip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
 
 // Setup
@@ -25,6 +26,7 @@ input.onGesture(Gesture.Shake, function () {
 // Start game (Button B)
 input.onButtonPressed(Button.B, function () {
     gameActive = false
+    falseStart = false
     startTime = 0
     basic.clearScreen()
     basic.showString("3")
@@ -37,17 +39,17 @@ input.onButtonPressed(Button.B, function () {
     startTime = control.millis()
     gameActive = true
 })
-// Logic for False Start:
-waitingForGreen = true
+
+// Period where pressing A causes a False Start
 basic.pause(randint(1000, 3000))
 
-// Check if player already failed during the pause
-if (waitingForGreen) {
-    waitingForGreen = false
+// Only turn green and start timer if no false start happened
+if (falseStart == false) {
     strip.showColor(neopixel.colors(NeoPixelColors.Green))
     startTime = control.millis()
     gameActive = true
 }
+
 
 // Record reaction time (Button A)
 input.onButtonPressed(Button.A, function () {
