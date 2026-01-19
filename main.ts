@@ -11,10 +11,10 @@ let scoreP2 = 9999
 let startTime = 0
 let gameActive = false
 
-let strip = neopixel.create(DigitalPin.P15, 4, NeoPixelMode.RGB)
+let strip = neopixel.create(DigitalPin.P8, 4, NeoPixelMode.RGB)
 
 // Setup
-strip.showColor(neopixel.colors(NeoPixelColors.Black))
+strip.showColor(neopixel.colors(NeoPixelColors.Orange))
 basic.showString("P1")
 
 // Switch Player by shaking
