@@ -4,14 +4,13 @@
  * Created on: Jan 2026
  * This program records reaction time for 2 players
  */
-
 let currentPlayer = 1
 let scoreP1 = 9999
 let scoreP2 = 9999
 let startTime = 0
 let gameActive = false
-
-let strip = neopixel.create(DigitalPin.P8, 4, NeoPixelMode.RGB)
+let waitingForGreen = false 
+let strip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
 
 // Setup
 strip.showColor(neopixel.colors(NeoPixelColors.Orange))
@@ -28,14 +27,27 @@ input.onButtonPressed(Button.B, function () {
     gameActive = false
     startTime = 0
     basic.clearScreen()
-
+    basic.showString("3")
+    basic.showString("2")
+    basic.showString("1")
     strip.showColor(neopixel.colors(NeoPixelColors.Red))
+    // Random interval to start the game    
     basic.pause(randint(1000, 3000))
-
     strip.showColor(neopixel.colors(NeoPixelColors.Green))
     startTime = control.millis()
     gameActive = true
 })
+// Logic for False Start:
+waitingForGreen = true
+basic.pause(randint(1000, 3000))
+
+// Check if player already failed during the pause
+if (waitingForGreen) {
+    waitingForGreen = false
+    strip.showColor(neopixel.colors(NeoPixelColors.Green))
+    startTime = control.millis()
+    gameActive = true
+}
 
 // Record reaction time (Button A)
 input.onButtonPressed(Button.A, function () {
