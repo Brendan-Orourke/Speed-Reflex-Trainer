@@ -15,6 +15,7 @@ let strip = neopixel.create(DigitalPin.P16, 4, NeoPixelMode.RGB)
 
 // Setup
 strip.showColor(neopixel.colors(NeoPixelColors.Orange))
+basic.showString("Shake Microbit to change player")
 basic.showString("P1")
 
 // Switch Player by shaking
